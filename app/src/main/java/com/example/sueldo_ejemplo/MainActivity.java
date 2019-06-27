@@ -48,31 +48,48 @@ public class MainActivity extends AppCompatActivity {
         int dias = Integer.parseInt(txtDias.getText().toString());
         int horas_mensuales = horas*dias;
         int pago_por_horas = Integer.parseInt(txtpago.getText().toString());
-        int sueldo_base = Integer.parseInt(txtsueldo.getText().toString());
+        int sbase = Integer.parseInt(txtsueldo.getText().toString());
+
+
         double pago = horas_mensuales * pago_por_horas;
-        double descuento = Double.parseDouble(txtdcto.getText().toString());
-        pago -= descuento;
+        double desc = Double.parseDouble(txtdcto.getText().toString());
+        double desc2;
+
+
+
 
         if(chbxPago.isChecked() == true){
             lbl_pago.setText(String.valueOf(pago));
         }
-        if(chbxDcto.isChecked() == true && pago > sueldo_base){
-            descuento = (pago*descuento)/100.00;
-            lbl_dcto.setText(String.valueOf(descuento));
-            pago = pago - descuento;
+
+
+        if(chbxDcto.isChecked() == true && pago > sbase){
+            desc = (desc/100)* pago;
+
+            lbl_dcto.setText(String.valueOf(desc));
+            pago = pago - desc;
             lbl_pago.setText(String.valueOf(pago));
+
+
         }
-        else if(chbxDcto.isChecked() == true && pago < sueldo_base){
-            descuento = 0;
-            lbl_dcto.setText(String.valueOf(descuento));
+
+
+
+        else if(chbxDcto.isChecked() == true && pago < sbase){
+            desc = 0;
+            lbl_dcto.setText(String.valueOf(desc));
             pago = pago;
             lbl_pago.setText(String.valueOf(pago));
 
         }
+
+
+
+
         if (rgRedondeo.getCheckedRadioButtonId() == R.id.rbRedondeo) {
             int pago_redondeo = (int)Math.round(pago);
             lbl_pago.setText(String.valueOf(pago_redondeo));
-            int dcto_redondeo = (int)Math.round((descuento));
+            int dcto_redondeo = (int)Math.round((desc));
             lbl_dcto.setText(String.valueOf(dcto_redondeo));
         }
 
@@ -80,6 +97,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void limpiar(View view){
+
+        txtHoras.setText(String.valueOf(""));
+        txtDias.setText(String.valueOf(""));
+        txtpago.setText(String.valueOf(""));
+        txtdcto.setText(String.valueOf(""));
+        txtsueldo.setText(String.valueOf(""));
+        lbl_pago.setText(String.valueOf(""));
+        lbl_dcto.setText(String.valueOf(""));
+
+
+        if(chbxPago.isChecked()==true){
+            chbxPago.setChecked(false);
+        }
+
+        if(chbxDcto.isChecked()==true) {
+            chbxDcto.setChecked(false);
+        }
+
+        if(rgRedondeo.getCheckedRadioButtonId()==R.id.rbRedondeo){
+            rbRedondeo.setChecked(false);
+
+        }
+
+        if(rgRedondeo.getCheckedRadioButtonId()==R.id.rbNoRedondeo){
+            rbNoRedondeo.setChecked(false);
+        }
+
 
     }
 }
